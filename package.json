@@ -1,0 +1,9 @@
+{
+  "name": "orders-manager",
+  "version": "1.0.0",
+  "description": "App for managing orders in online store",
+  "main": "index.js",
+  "repository": "git@github.com:DimaDK24/orders-manager.git",
+  "author": "DimaDK <DimaKrutDK@ya.ru>",
+  "license": "MIT"
+}
