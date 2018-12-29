@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 django = "*"
+python-dotenv = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
