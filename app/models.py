@@ -4,8 +4,12 @@ from django.db import models
 # Create your models here.
 
 
+class Order(models.Model):
+    customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
+
+
 class Customer(models.Model):
-    products = models.ManyToManyField('Product', through='ProductOrder')
+    pass
 
 
 class Address(models.Model):
@@ -31,19 +35,12 @@ class Phone(models.Model):
         return self.number
 
 
-class ProductOrder(models.Model):
-    customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    number = models.PositiveIntegerField(default=1)
-
-    def __str__(self):
-        return f'{self.customer} заказал {self.number} {self.product}'
-
-
 class Product(models.Model):
     name = models.CharField(max_length=100)
     options = models.ManyToManyField('Option')
     price = models.FloatField()
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    number = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.name
