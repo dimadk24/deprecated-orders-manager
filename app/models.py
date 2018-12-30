@@ -36,14 +36,14 @@ class Phone(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=100)
-    options = models.ManyToManyField('Option')
-    price = models.FloatField()
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    price = models.FloatField()
     number = models.PositiveIntegerField(default=1)
+    options = models.ManyToManyField('Option')
+    comment = models.TextField(default='')
 
     def __str__(self):
-        return self.name
+        return self.comment
 
 
 class Parameter(models.Model):
