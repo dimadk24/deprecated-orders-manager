@@ -41,7 +41,7 @@ class ProductOrder(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=100, null=False)
+    name = models.CharField(max_length=100)
     options = models.ManyToManyField('Option')
 
     def __str__(self):
@@ -49,14 +49,14 @@ class Product(models.Model):
 
 
 class Parameter(models.Model):
-    name = models.CharField(max_length=100, null=False)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
 
 class Option(models.Model):
-    name = models.CharField(max_length=100, null=False)
+    name = models.CharField(max_length=100)
     parameter = models.ForeignKey(Parameter, on_delete=models.CASCADE)
 
     def __str__(self):
