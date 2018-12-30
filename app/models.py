@@ -43,6 +43,7 @@ class ProductOrder(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100)
     options = models.ManyToManyField('Option')
+    price = models.FloatField()
 
     def __str__(self):
         return self.name
