@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app.models import Product, Parameter, Option, Customer, ProductOrder, Phone
+from app.models import Product, Parameter, Option, Customer, ProductOrder, Phone, Address
 
 # Register your models here.
 
@@ -10,3 +10,4 @@ admin.site.register(Product)
 admin.site.register(Parameter)
 admin.site.register(Option)
 admin.site.register(Phone)
+admin.site.register(Address)
