@@ -14,18 +14,31 @@ class Customer(models.Model):
 
 
 class Address(models.Model):
+    STREET_TYPES_CHOICES = (
+        ('ул', 'улица'),
+        ('пер', 'переулок'),
+        ('пр', 'проезд'),
+        ('бул', 'бульвар'),
+        ('пл', 'площадь'),
+        ('тр', 'тракт'),
+        ('шс', 'шоссе'),
+    )
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
     index = models.PositiveIntegerField()
     area = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
-    street = models.CharField(max_length=50)
+    street_type = models.CharField(max_length=30, choices=STREET_TYPES_CHOICES,
+                                   default=STREET_TYPES_CHOICES[0][0])
+    street_name = models.CharField(max_length=50)
     house = models.CharField(max_length=20)
+    building = models.CharField(max_length=10, default='')
     flat = models.PositiveIntegerField()
     floor = models.PositiveSmallIntegerField()
     entrance = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        return f'г. {self.city}, ул. {self.street}, д. {self.house}, кв. {self.flat}'
+        return (f'г. {self.city}, {self.street_type}. {self.street_name}, '
+                f'д. {self.house} {self.building}, кв. {self.flat}')
 
 
 class Phone(models.Model):
@@ -36,15 +49,23 @@ class Phone(models.Model):
         return self.number
 
 
+class ProductType(models.Model):
+    name = models.CharField(max_length=50)
+    parameters = models.ManyToManyField('Parameter')
+
+
 class Product(models.Model):
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    type = models.ForeignKey('ProductType', on_delete=models.CASCADE)
     price = models.FloatField()
+    purchase_price = models.FloatField()
     number = models.PositiveIntegerField(default=1)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)
     options = models.ManyToManyField('Option')
     comment = models.TextField(default='')
 
     def __str__(self):
-        return self.comment
+        return self.name
 
 
 class Parameter(models.Model):
