@@ -1,0 +1,22 @@
+{% extends "app/base.html" %}
+
+{% block title %}Добавить заказ{% endblock %}
+
+{% block content %}
+    <h1>Добавить заказ</h1>
+    <main>
+        <label for="name-input">
+            Имя
+            <input type="text" id="name-input" disabled name="name">
+        </label>
+        <label for="type-select">
+            Тип товара
+            <select name="type" id="type-select">
+                <option value="0" id="placeholder-option"></option>
+                {% for type in types %}
+                    <option value="{{ type.id }}">{{ type.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+    </main>
+{% endblock %}
