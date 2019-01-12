@@ -6,10 +6,15 @@
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'app/common.css' %}">
+    {% block  head %}
+
+    {% endblock %}
 </head>
 <body>
-{% block content %}
+<div class="container">
+    {% block content %}
 
-{% endblock %}
+    {% endblock %}
+</div>
 </body>
 </html>

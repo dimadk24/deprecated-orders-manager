@@ -2,21 +2,25 @@
 
 {% block title %}Добавить заказ{% endblock %}
 
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/add_order.css' %}">
+{% endblock %}
+
 {% block content %}
     <h1>Добавить заказ</h1>
     <main>
         <label for="name-input">
             Имя
-            <input type="text" id="name-input" disabled name="name">
+            <input type="text" id="name-input" class="name-input" disabled name="name">
         </label>
-        <label for="type-select">
-            Тип товара
-            <select name="type" id="type-select">
-                <option value="0" id="placeholder-option"></option>
-                {% for type in types %}
-                    <option value="{{ type.id }}">{{ type.name }}</option>
-                {% endfor %}
-            </select>
-        </label>
+        <span>Тип товара</span>
+        <section class="buttons-wrapper">
+            {% for type in types %}
+                <button type="submit" class="button" value="{{ type.id }}">
+                    {{ type.name }}
+                </button>
+            {% endfor %}
+        </section>
     </main>
 {% endblock %}
