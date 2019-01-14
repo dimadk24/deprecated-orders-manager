@@ -8,6 +8,9 @@ class Order(models.Model):
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
     comment = models.TextField(default='')
 
+    def __str__(self):
+        return f'Заказ №{self.pk}'
+
 
 class Customer(models.Model):
     pass
@@ -52,6 +55,9 @@ class Phone(models.Model):
 class ProductType(models.Model):
     name = models.CharField(max_length=50)
     parameters = models.ManyToManyField('Parameter')
+
+    def __str__(self):
+        return self.name
 
 
 class Product(models.Model):

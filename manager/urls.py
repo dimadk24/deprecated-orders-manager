@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from app import views
+
 urlpatterns = [
+    path('', views.add_order_view, name='index'),
     path('admin/', admin.site.urls),
 ]

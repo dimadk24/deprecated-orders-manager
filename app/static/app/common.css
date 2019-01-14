@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #efefef;
+    font-size: larger;
+}
+
+.container {
+    max-width: 1024px;
+    width: 70%;
+    margin: 0 auto;
+
+    padding: 10px 0;
+}
+
+.container > h1 {
+    text-align: center;
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
