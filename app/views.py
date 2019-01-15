@@ -1,6 +1,12 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 
 from app.models import ProductType
+
+
+def index_view(request):
+    return HttpResponseRedirect(reverse('add_order'))
 
 
 def add_order_view(request):

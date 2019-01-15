@@ -19,6 +19,7 @@ from django.urls import path
 from app import views
 
 urlpatterns = [
-    path('', views.add_order_view, name='index'),
+    path('', views.index_view, name='index'),
+    path('add_order', views.add_order_view, name='add_order'),
     path('admin/', admin.site.urls),
 ]
