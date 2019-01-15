@@ -23,6 +23,11 @@
                 <button class="button" value="{{ type.id }}">
                     {{ type.name }}
                 </button>
+            {% empty %}
+                <span>
+                    Ещё нету типов товаров, <a href="{% url 'admin:app_producttype_add' %}"
+                >создай первый</a>!
+                </span>
             {% endfor %}
         </section>
     </main>
