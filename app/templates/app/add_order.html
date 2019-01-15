@@ -20,7 +20,7 @@
         <span>Тип товара</span>
         <section class="buttons-wrapper">
             {% for type in types %}
-                <button class="button" value="{{ type.id }}">
+                <button class="button choose-type-button" value="{{ type.id }}">
                     {{ type.name }}
                 </button>
             {% empty %}
@@ -31,4 +31,8 @@
             {% endfor %}
         </section>
     </main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/add_order.js' %}"></script>
 {% endblock %}
