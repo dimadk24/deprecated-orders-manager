@@ -82,7 +82,11 @@
         padding: 10px 0;
     }
 
-    .menu--opened .menu {
+    body.menu--opened {
+        overflow-y: hidden;
+    }
+
+    body.menu--opened .menu {
         display: flex;
     }
 }

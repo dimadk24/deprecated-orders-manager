@@ -1,6 +1,6 @@
 (function () {
-    const nav = document.getElementById('nav');
+    const body = document.body;
     document.getElementById('menu-toggle').addEventListener('click', () => {
-        nav.classList.toggle('menu--opened')
+        body.classList.toggle('menu--opened')
     });
 })();
