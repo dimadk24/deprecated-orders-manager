@@ -1,14 +1,23 @@
-from django.contrib import admin
+from django.contrib.admin import AdminSite
 
 from app.models import Product, Parameter, Option, Customer, Phone, Address, Order, ProductType
 
+
 # Register your models here.
 
-admin.site.register(Customer)
-admin.site.register(Product)
-admin.site.register(Parameter)
-admin.site.register(Option)
-admin.site.register(Phone)
-admin.site.register(Address)
-admin.site.register(Order)
-admin.site.register(ProductType)
+
+class MySiteAdmin(AdminSite):
+    site_header = 'Админка Orders Manager'
+    site_title = 'Админка'
+
+
+admin_site = MySiteAdmin(name='myadmin')
+
+admin_site.register(Customer)
+admin_site.register(Product)
+admin_site.register(Parameter)
+admin_site.register(Option)
+admin_site.register(Phone)
+admin_site.register(Address)
+admin_site.register(Order)
+admin_site.register(ProductType)
