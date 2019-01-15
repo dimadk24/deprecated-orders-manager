@@ -20,7 +20,7 @@
         <span>Тип товара</span>
         <section class="buttons-wrapper">
             {% for type in types %}
-                <button type="submit" class="button" value="{{ type.id }}">
+                <button class="button" value="{{ type.id }}">
                     {{ type.name }}
                 </button>
             {% endfor %}
