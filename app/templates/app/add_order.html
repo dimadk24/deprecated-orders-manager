@@ -13,22 +13,27 @@
 
 {% block content %}
     <main>
-        <label for="name-input">
+        <label for="name-input" class="name-label">
             Имя
             <input type="text" id="name-input" class="name-input" disabled name="name">
         </label>
-        <span>Тип товара</span>
+        <span id="product-type">Тип товара</span>
         <section class="buttons-wrapper">
             {% for type in types %}
-                <button class="button" value="{{ type.id }}">
+                <button class="button choose-type-button" value="{{ type.id }}">
                     {{ type.name }}
                 </button>
             {% empty %}
                 <span>
-                    Ещё нету типов товаров, <a href="{% url 'admin:app_producttype_add' %}"
+                    Ещё нету типов товаров, <a
+                        href="{% url 'admin:app_producttype_add' %}"
                 >создай первый</a>!
                 </span>
             {% endfor %}
         </section>
     </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'app/js/add_order.js' %}"></script>
 {% endblock %}

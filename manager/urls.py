@@ -21,5 +21,7 @@ from app.admin import admin_site
 urlpatterns = [
     path('', views.index_view, name='index'),
     path('add_order', views.add_order_view, name='add_order'),
+    path('api/getProductTypeParameters', views.get_product_type_parameters,
+         name='get_product_type_parameters'),
     path('admin/', admin_site.urls),
 ]
