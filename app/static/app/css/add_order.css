@@ -1,3 +1,5 @@
+@import url('./spinkit.css');
+
 main {
     text-align: center;
 }
@@ -40,4 +42,24 @@ main {
 .button:hover,
 .button:active {
     background-color: #c3cbea;
+}
+
+
+.loader > .sk-circle {
+    width: 60px;
+    height: 60px;
+}
+
+.parameters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.parameter {
+    margin: 0 10px 5px 0;
+}
+
+.parameter > span {
+    margin-right: 5px;
 }

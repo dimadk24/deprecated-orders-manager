@@ -17,7 +17,7 @@
             Имя
             <input type="text" id="name-input" class="name-input" disabled name="name">
         </label>
-        <span>Тип товара</span>
+        <span id="product-type">Тип товара</span>
         <section class="buttons-wrapper">
             {% for type in types %}
                 <button class="button choose-type-button" value="{{ type.id }}">
