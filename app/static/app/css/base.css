@@ -22,3 +22,18 @@ body {
     padding: 0 10px;
     margin-bottom: 15px;
 }
+
+a,
+a:hover,
+a:visited,
+a:active {
+    text-decoration: none;
+    color: #402ecb;
+    font-weight: bold;
+    transition-duration: .3s;
+}
+
+a:hover,
+a:active {
+    color: #b72935;
+}
