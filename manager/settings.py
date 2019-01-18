@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '192.168.43.129', 'dimadk.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'app.apps.AppConfig',
-    'django.contrib.admin',
+    'django.contrib.admin.apps.SimpleAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

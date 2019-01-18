@@ -1,4 +1,6 @@
 from django.contrib.admin import AdminSite
+from django.contrib.auth.admin import GroupAdmin, UserAdmin
+from django.contrib.auth.models import Group, User
 
 from app.models import Product, Parameter, Option, Customer, Phone, Address, Order, ProductType
 
@@ -12,6 +14,9 @@ class MySiteAdmin(AdminSite):
 
 
 admin_site = MySiteAdmin(name='myadmin')
+
+admin_site.register(Group, GroupAdmin)
+admin_site.register(User, UserAdmin)
 
 admin_site.register(Customer)
 admin_site.register(Product)
