@@ -4,6 +4,12 @@ main {
     text-align: center;
 }
 
+.product {
+    background: #d8d8d8;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 .name-input {
     width: 350px;
     max-width: 95%;

@@ -17,6 +17,18 @@ body {
     padding: 10px 0;
 }
 
+@media (max-width: 768px) {
+    .container {
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+    }
+}
+
 .container > h1 {
     text-align: center;
     padding: 0 10px;
