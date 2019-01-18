@@ -25,7 +25,8 @@
                 </button>
             {% empty %}
                 <span>
-                    Ещё нету типов товаров, <a href="{% url 'admin:app_producttype_add' %}"
+                    Ещё нету типов товаров, <a
+                        href="{% url 'admin:app_producttype_add' %}"
                 >создай первый</a>!
                 </span>
             {% endfor %}
@@ -34,5 +35,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'app/js/add_order.js' %}"></script>
+    <script src="{% static 'app/js/add_order.js' %}"></script>
 {% endblock %}
