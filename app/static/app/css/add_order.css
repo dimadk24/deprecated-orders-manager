@@ -12,7 +12,7 @@ main {
     color: black;
 }
 
-label {
+.name-label {
     display: block;
     margin-bottom: 15px;
 }
