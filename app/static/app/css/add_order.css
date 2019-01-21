@@ -7,6 +7,7 @@ main {
 .product {
     background: #d8d8d8;
     padding: 10px;
+    margin-bottom: 15px;
     border-radius: 10px;
 }
 
@@ -68,4 +69,16 @@ main {
 
 .parameter > span {
     margin-right: 5px;
+}
+
+.btn-add-product {
+    font-size: xx-large;
+    padding: 0;
+    width: 60px;
+}
+
+.btn-add-product:hover,
+.btn-add-product:active {
+    background-color: darkgreen;
+    color: white;
 }

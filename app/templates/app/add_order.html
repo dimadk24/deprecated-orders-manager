@@ -13,29 +13,25 @@
 
 {% block content %}
     <main>
-        <section class="product">
-            <label for="name-input" class="name-label">
-                Имя товара
-                <input type="text" id="name-input" class="name-input" disabled name="name">
-            </label>
-            <span id="product-type">Тип товара</span>
-            <section class="buttons-wrapper">
-                {% for type in types %}
-                    <button class="button choose-type-button" value="{{ type.id }}">
-                        {{ type.name }}
-                    </button>
-                {% empty %}
-                    <span>
-                    Ещё нету типов товаров, <a
-                            href="{% url 'admin:app_producttype_add' %}"
-                    >создай первый</a>!
-                </span>
-                {% endfor %}
-            </section>
-        </section>
+        <button id="add-product" class="button btn-add-product">+</button>
     </main>
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'app/js/add_order.js' %}"></script>
+    <script>
+      window.types = [];
+      {% for type in types %}
+        types.push({
+          id: {{ type.id }},
+          name: '{{ type.name }}'
+        });
+      {% endfor %}
+      window.createProductTypeLink = '{% url 'admin:app_producttype_add' %}';
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.runtime.js"
+            integrity="sha256-BtsRmiQclHL1u5tbgsccCGYRl/l7cDCRfS786gntiRI="
+            crossorigin="anonymous"></script>
+    <script src="{% static 'app/js/compiled_templates/product.js' %}"></script>
+    <script src="{% static 'app/js/compiled_templates/product__parameters.js' %}"></script>
+    <script src="{% static 'app/js/add_order/index.js' %}"></script>
 {% endblock %}

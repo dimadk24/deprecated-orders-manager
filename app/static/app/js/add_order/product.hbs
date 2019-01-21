@@ -1,0 +1,20 @@
+<section class="product">
+    <label for="name-input-{{id}}" class="name-label">
+        Имя товара
+        <input type="text" id="name-input-{{id}}" class="name-input" disabled>
+    </label>
+    <span class="product__type">Тип товара</span>
+    <section class="product__buttons-wrapper">
+        {{#each types}}
+            <button class="button product__choose-type-button" value="{{ id }}">
+                {{ name }}
+            </button>
+        {{/each}}
+        {{#unless types.length}}
+            <span>
+                Ещё нету типов товаров, <a href="{{ createProductTypeLink }}"
+                >создай первый</a>!
+            </span>
+        {{/unless}}
+    </section>
+</section>
