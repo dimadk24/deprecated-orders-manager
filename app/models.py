@@ -28,14 +28,17 @@ class Order(models.Model):
 
 
 class Customer(models.Model):
-    pass
+    main_phone = models.CharField(max_length=30, db_index=True,
+                                  verbose_name='Главный телефон')
+    additional_phone = models.CharField(max_length=30, blank=True,
+                                        verbose_name='Дополнительный телефон')
 
     class Meta:
         verbose_name = 'клиент'
         verbose_name_plural = 'клиенты'
 
     def __str__(self):
-        return f'Клиент №{self.pk}'
+        return f'Клиент №{self.pk}, тел. {self.main_phone}'
 
 
 class Address(models.Model):
@@ -70,18 +73,6 @@ class Address(models.Model):
     class Meta:
         verbose_name = 'адрес'
         verbose_name_plural = 'адреса'
-
-
-class Phone(models.Model):
-    number = models.CharField(max_length=30, verbose_name='Номер')
-    customer = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Клиент')
-
-    def __str__(self):
-        return self.number
-
-    class Meta:
-        verbose_name = 'телефон'
-        verbose_name_plural = 'телефоны'
 
 
 class ProductType(models.Model):
