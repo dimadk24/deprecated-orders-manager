@@ -7,7 +7,7 @@ from django.utils import timezone
 
 class Order(models.Model):
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Клиент')
-    comment = models.TextField(default='', verbose_name='Комментарий')
+    comment = models.TextField(default='', blank=True, verbose_name='Комментарий')
     order_datetime = models.DateTimeField(verbose_name='Дата и время заказа')
     delivery_date = models.DateField(verbose_name='Дата доставки')
     delivery_time = models.CharField(max_length=50, verbose_name='Время доставки')
@@ -33,6 +33,9 @@ class Customer(models.Model):
     class Meta:
         verbose_name = 'клиент'
         verbose_name_plural = 'клиенты'
+
+    def __str__(self):
+        return f'Клиент №{self.pk}'
 
 
 class Address(models.Model):
@@ -101,7 +104,7 @@ class Product(models.Model):
     number = models.PositiveIntegerField(default=1, verbose_name='Количество')
     order = models.ForeignKey('Order', on_delete=models.CASCADE, verbose_name='Заказ')
     options = models.ManyToManyField('Option', verbose_name='Опции')
-    comment = models.TextField(default='', verbose_name='Комментарий')
+    comment = models.TextField(default='', blank=True, verbose_name='Комментарий')
 
     def __str__(self):
         return self.name
