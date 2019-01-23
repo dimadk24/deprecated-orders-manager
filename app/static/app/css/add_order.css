@@ -1,7 +1,23 @@
 @import url('./spinkit.css');
 
+.order-id-input {
+    height: 2em;
+    width: 80px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    vertical-align: middle;;
+}
+
 main {
     text-align: center;
+}
+
+.product {
+    background: #d8d8d8;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
 }
 
 .name-input {
@@ -62,4 +78,16 @@ main {
 
 .parameter > span {
     margin-right: 5px;
+}
+
+.btn-add-product {
+    font-size: xx-large;
+    padding: 0;
+    width: 60px;
+}
+
+.btn-add-product:hover,
+.btn-add-product:active {
+    background-color: darkgreen;
+    color: white;
 }

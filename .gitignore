@@ -3,3 +3,4 @@ db.sqlite3
 .env
 __pycache__
 http-client.env.json
+node_modules/

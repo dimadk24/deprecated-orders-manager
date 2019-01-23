@@ -1,0 +1,12 @@
+<section class="parameters">
+    {{#each parameters }}
+        <label class="parameter" for="parameters-select-{{ id }}">
+            <span>{{ name }}:</span>
+            <select name="parameter1" id="parameters-select-{{ id }}">
+                {{#each options}}
+                    <option value="{{ id }}">{{ name }}</option>
+                {{/each}}
+            </select>
+        </label>
+    {{/each}}
+</section>

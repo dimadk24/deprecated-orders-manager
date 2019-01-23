@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from app.models import ProductType
+from app.models import ProductType, Order
 from app.responses import russian_json_response
 
 
@@ -11,10 +11,22 @@ def index_view(request):
     return HttpResponseRedirect(reverse('add_order'))
 
 
+def get_last_order_id():
+    try:
+        return Order.objects.latest('id').pk
+    except Order.DoesNotExist:
+        return 0
+
+
 @login_required
 def add_order_view(request):
     product_types = ProductType.objects.all()
-    return render(request, 'app/add_order.html', {'types': product_types})
+    new_order_id = get_last_order_id() + 1
+    context = {
+        'types': product_types,
+        'new_order_id': new_order_id
+    }
+    return render(request, 'app/add_order.html', context)
 
 
 @login_required
