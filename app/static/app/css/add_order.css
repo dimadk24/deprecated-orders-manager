@@ -1,5 +1,14 @@
 @import url('./spinkit.css');
 
+.order-id-input {
+    height: 2em;
+    width: 80px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    vertical-align: middle;;
+}
+
 main {
     text-align: center;
 }

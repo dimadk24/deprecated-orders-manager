@@ -8,7 +8,10 @@
 {% endblock %}
 
 {% block header %}
-    Добавить заказ
+    <label for="order-id">
+        <span>Добавить заказ №</span>
+        <input type="number" value="{{ new_order_id }}" id="order-id" class="order-id-input">
+    </label>
 {% endblock %}
 
 {% block content %}
