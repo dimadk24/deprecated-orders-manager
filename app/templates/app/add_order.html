@@ -9,7 +9,7 @@
 
 {% block header %}
     <label for="order-id">
-        <span>Добавить заказ №</span>
+        Добавить заказ №
         <input type="number" value="{{ new_order_id }}" id="order-id" class="order-id-input">
     </label>
 {% endblock %}
@@ -22,13 +22,14 @@
 
 {% block scripts %}
     <script>
-      window.types = [];
-      {% for type in types %}
-        types.push({
-          id: {{ type.id }},
-          name: '{{ type.name }}'
-        });
-      {% endfor %}
+      window.types = [
+        {% for type in types %}
+          {
+            id: {{ type.id }},
+            name: '{{ type.name }}'
+          },
+        {% endfor %}
+      ];
       window.createProductTypeLink = '{% url 'admin:app_producttype_add' %}';
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.runtime.js"
