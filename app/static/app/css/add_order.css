@@ -6,11 +6,82 @@
     padding: 5px;
     border-radius: 5px;
     border: 1px solid black;
-    vertical-align: middle;;
+    vertical-align: middle;
 }
 
 main {
+    display: flex;
+}
+
+.products {
+    width: 70%;
     text-align: center;
+}
+
+aside {
+    width: 30%;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+aside label {
+    margin-bottom: 5px;
+}
+
+aside label:last-child {
+    margin-bottom: 0;
+}
+
+aside input {
+    width: 150px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid black;
+}
+
+aside input[type="number"] {
+    width: 90px;
+}
+
+@media (min-width: 961px) {
+    aside {
+        position: fixed;
+        top: 150px;
+        right: 0;
+    }
+}
+
+@media (max-width: 960px) {
+    main {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    aside {
+        margin-bottom: 20px;
+    }
+
+    .products {
+        width: 80%;
+    }
+}
+
+@media (max-width: 640px) {
+    .products {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .products {
+        width: 95%;
+    }
+}
+
+.address {
+    display: flex;
+    flex-direction: column;
 }
 
 .product {

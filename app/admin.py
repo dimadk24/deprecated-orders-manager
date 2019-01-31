@@ -2,7 +2,7 @@ from django.contrib.admin import AdminSite
 from django.contrib.auth.admin import GroupAdmin, UserAdmin
 from django.contrib.auth.models import Group, User
 
-from app.models import Product, Parameter, Option, Customer, Phone, Address, Order, ProductType
+from app.models import Product, Parameter, Option, Customer, Address, Order, ProductType
 
 
 # Register your models here.
@@ -22,7 +22,6 @@ admin_site.register(Customer)
 admin_site.register(Product)
 admin_site.register(Parameter)
 admin_site.register(Option)
-admin_site.register(Phone)
 admin_site.register(Address)
 admin_site.register(Order)
 admin_site.register(ProductType)

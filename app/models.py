@@ -28,14 +28,17 @@ class Order(models.Model):
 
 
 class Customer(models.Model):
-    pass
+    main_phone = models.CharField(max_length=30, db_index=True,
+                                  verbose_name='Телефон')
+    additional_phone = models.CharField(max_length=30, blank=True,
+                                        verbose_name='Дополнительный телефон')
 
     class Meta:
         verbose_name = 'клиент'
         verbose_name_plural = 'клиенты'
 
     def __str__(self):
-        return f'Клиент №{self.pk}'
+        return f'Клиент №{self.pk}, тел. {self.main_phone}'
 
 
 class Address(models.Model):
@@ -49,8 +52,8 @@ class Address(models.Model):
         ('шс', 'шоссе'),
     )
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Клиент')
-    index = models.PositiveIntegerField(verbose_name='Индекс')
-    area = models.CharField(max_length=50, verbose_name='Область')
+    index = models.PositiveIntegerField(verbose_name='Индекс', blank=True)
+    area = models.CharField(max_length=50, verbose_name='Область', blank=True)
     city = models.CharField(max_length=50, verbose_name='Город')
     street_type = models.CharField(max_length=30,
                                    choices=STREET_TYPES_CHOICES,
@@ -58,7 +61,7 @@ class Address(models.Model):
                                    verbose_name='Тип улицы')
     street_name = models.CharField(max_length=50, verbose_name='Название улицы')
     house = models.CharField(max_length=20, verbose_name='Дом')
-    building = models.CharField(max_length=10, default='', verbose_name='Корпус')
+    building = models.CharField(max_length=10, default='', blank=True, verbose_name='Корпус')
     flat = models.PositiveIntegerField(verbose_name='Квартира')
     floor = models.PositiveSmallIntegerField(verbose_name='Этаж')
     entrance = models.PositiveSmallIntegerField(verbose_name='Подъезд')
@@ -70,18 +73,6 @@ class Address(models.Model):
     class Meta:
         verbose_name = 'адрес'
         verbose_name_plural = 'адреса'
-
-
-class Phone(models.Model):
-    number = models.CharField(max_length=30, verbose_name='Номер')
-    customer = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Клиент')
-
-    def __str__(self):
-        return self.number
-
-    class Meta:
-        verbose_name = 'телефон'
-        verbose_name_plural = 'телефоны'
 
 
 class ProductType(models.Model):
