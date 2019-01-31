@@ -29,7 +29,7 @@ class Order(models.Model):
 
 class Customer(models.Model):
     main_phone = models.CharField(max_length=30, db_index=True,
-                                  verbose_name='Главный телефон')
+                                  verbose_name='Телефон')
     additional_phone = models.CharField(max_length=30, blank=True,
                                         verbose_name='Дополнительный телефон')
 
