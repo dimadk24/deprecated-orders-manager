@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from app.models import ProductType, Order
+from app.models import ProductType, Order, Address
 from app.responses import russian_json_response
 
 
@@ -22,9 +22,11 @@ def get_last_order_id():
 def add_order_view(request):
     product_types = ProductType.objects.all()
     new_order_id = get_last_order_id() + 1
+    street_types = Address.STREET_TYPES_CHOICES
     context = {
         'types': product_types,
-        'new_order_id': new_order_id
+        'new_order_id': new_order_id,
+        'street_types': street_types
     }
     return render(request, 'app/add_order.html', context)
 

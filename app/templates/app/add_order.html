@@ -16,7 +16,65 @@
 
 {% block content %}
     <main>
-        <button id="add-product" class="button btn-add-product">+</button>
+        <section class="products">
+            <button id="add-product" class="button btn-add-product">+</button>
+        </section>
+        <aside>
+            <label for="main-phone-input">
+                Телефон
+                <input id="main-phone-input">
+            </label>
+            <label for="add-phone-input">
+                Доп. телефон
+                <input id="add-phone-input">
+            </label>
+            <div class="address">
+                <label for="street-type-select">
+                    Тип улицы
+                    <select id="street-type-select">
+                        {% for id, value in street_types %}
+                            <option value="{{ id }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label for="index-input">
+                    Индекс
+                    <input id="index-input" type="number">
+                </label>
+                <label for="area-input">
+                    Область
+                    <input type="text" id="area-input">
+                </label>
+                <label for="city-input">
+                    Город
+                    <input type="text" value="Минск" id="city-input">
+                </label>
+                <label for="street-input">
+                    Улица
+                    <input type="text" id="street-input">
+                </label>
+                <label for="house-input">
+                    Дом
+                    <input type="text" id="house-input">
+                </label>
+                <label for="building-input">
+                    Корпус
+                    <input type="text" id="building-input">
+                </label>
+                <label for="flat-input">
+                    Квартира
+                    <input type="number" id="flat-input">
+                </label>
+                <label for="floor-input">
+                    Этаж
+                    <input type="number" id="floor-input">
+                </label>
+                <label for="entrance-input">
+                    Подъезд
+                    <input type="number" id="entrance-input">
+                </label>
+            </div>
+        </aside>
     </main>
 {% endblock %}
 
