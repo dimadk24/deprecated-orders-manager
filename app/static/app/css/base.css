@@ -10,17 +10,11 @@ body {
 }
 
 .container {
-    max-width: 1024px;
-    width: 70%;
+    max-width: 1300px;
+    width: 90%;
     margin: 0 auto;
 
     padding: 10px 0;
-}
-
-@media (max-width: 768px) {
-    .container {
-        width: 80%;
-    }
 }
 
 @media (max-width: 480px) {
