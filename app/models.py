@@ -52,8 +52,8 @@ class Address(models.Model):
         ('шс', 'шоссе'),
     )
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Клиент')
-    index = models.PositiveIntegerField(verbose_name='Индекс')
-    area = models.CharField(max_length=50, verbose_name='Область')
+    index = models.PositiveIntegerField(verbose_name='Индекс', blank=True)
+    area = models.CharField(max_length=50, verbose_name='Область', blank=True)
     city = models.CharField(max_length=50, verbose_name='Город')
     street_type = models.CharField(max_length=30,
                                    choices=STREET_TYPES_CHOICES,
@@ -61,7 +61,7 @@ class Address(models.Model):
                                    verbose_name='Тип улицы')
     street_name = models.CharField(max_length=50, verbose_name='Название улицы')
     house = models.CharField(max_length=20, verbose_name='Дом')
-    building = models.CharField(max_length=10, default='', verbose_name='Корпус')
+    building = models.CharField(max_length=10, default='', blank=True, verbose_name='Корпус')
     flat = models.PositiveIntegerField(verbose_name='Квартира')
     floor = models.PositiveSmallIntegerField(verbose_name='Этаж')
     entrance = models.PositiveSmallIntegerField(verbose_name='Подъезд')
