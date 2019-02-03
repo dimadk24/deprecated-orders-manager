@@ -3,9 +3,8 @@ function removeChooseProductTypeUI(product) {
   product.querySelector('.product__buttons-wrapper').remove();
 }
 
-function showLoader(product) {
-  product.innerHTML +=
-    '<div class="loader">' +
+function getLoaderHtml() {
+  return '<div class="loader">' +
     '<div class="sk-circle">' +
     '<div class="sk-circle1 sk-child"></div>' +
     '<div class="sk-circle2 sk-child"></div>' +
@@ -40,11 +39,13 @@ async function chooseProductType() {
   const productElement = this.parentElement.parentElement;
   const productTypeId = this.value;
   removeChooseProductTypeUI(productElement);
-  showLoader(productElement);
+  const productInputs = productElement.querySelector('.product__inputs');
+  const loaderHtml = getLoaderHtml(productElement, productInputs);
+  productInputs.insertAdjacentHTML('afterend', loaderHtml);
   const parameters = await getParameters(productTypeId);
   removeLoader(productElement);
   const parametersHTML = createParametersHTML(parameters);
-  productElement.insertAdjacentHTML('beforeend', parametersHTML);
+  productInputs.insertAdjacentHTML('beforeend', parametersHTML);
 }
 
 function getProductTemplateFactory() {
