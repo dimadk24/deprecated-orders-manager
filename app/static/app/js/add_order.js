@@ -35,9 +35,24 @@ async function getParameters(productTypeId) {
   return await response.json();
 }
 
+function removePlaceholderOptionIfExists(options) {
+  const placeholderOption = options.find(option => option.getAttribute('value') === '0');
+  if (placeholderOption) placeholderOption.remove();
+}
+
+function onParameterSelect({target : select}) {
+  const parameterName = select.getAttribute('name');
+  const optionId = select.value;
+  const options = Array.from(select.querySelectorAll('option'));
+  const currentOption = options.find(option => option.getAttribute('value') === optionId);
+  console.log(parameterName, currentOption.innerText);
+  removePlaceholderOptionIfExists(options);
+}
+
 async function chooseProductType() {
   const productElement = this.parentElement.parentElement;
   const productTypeId = this.value;
+  const value = this.innerText;
   removeChooseProductTypeUI(productElement);
   const productInputs = productElement.querySelector('.product__inputs');
   const loaderHtml = getLoaderHtml(productElement, productInputs);
@@ -46,6 +61,9 @@ async function chooseProductType() {
   removeLoader(productElement);
   const parametersHTML = createParametersHTML(parameters);
   productInputs.insertAdjacentHTML('beforeend', parametersHTML);
+  const selectElements = Array.from(productElement.querySelectorAll('.parameters-select'));
+  selectElements.forEach(select => select.addEventListener('change', onParameterSelect));
+  console.log('parameter', value);
 }
 
 function getProductTemplateFactory() {
