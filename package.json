@@ -8,8 +8,8 @@
   "private": true,
   "scripts": {
     "test": "jest",
-    "compile:product": "handlebars app/static/app/js/add_order/product.hbs --min --extension \"hbs\" --output app/static/app/js/compiled_templates/product.js",
-    "compile:product__parameters": "handlebars app/static/app/js/add_order/product__parameters.hbs --min --extension \"hbs\" --output app/static/app/js/compiled_templates/product__parameters.js"
+    "compile:product": "handlebars app/static/app/dynamic_templates/product.hbs --min --extension \"hbs\" --output app/static/app/dynamic_compiled_templates/product.js",
+    "compile:product__parameters": "handlebars app/static/app/dynamic_templates/product__parameters.hbs --min --extension \"hbs\" --output app/static/app/dynamic_compiled_templates/product__parameters.js"
   },
   "jest": {
     "transform": {

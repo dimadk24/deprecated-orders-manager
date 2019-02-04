@@ -1,0 +1,38 @@
+<section class="product">
+    <div class="product__inputs">
+        <label for="name-input-{{id}}" class="name-label">
+        Имя товара
+        <input type="text" id="name-input-{{id}}" class="name-input" disabled>
+    </label>
+        <label for="price-input-{{id}}">
+            Цена товара
+            <input type="text" id="price-input-{{id}}">
+        </label>
+        <label for="purchase-price-input-{{id}}">
+            Закупочная цена товара
+            <input type="text" id="purchase-price-input-{{id}}">
+        </label>
+        <label for="number-input-{{id}}">
+            Количество товаров
+            <input type="number" id="number-input-{{id}}">
+        </label>
+    </div>
+    <span class="product__type">Тип товара</span>
+    <section class="product__buttons-wrapper">
+        {{#each types}}
+            <button class="button product__choose-type-button" value="{{ id }}">
+                {{ name }}
+            </button>
+        {{/each}}
+        {{#unless types.length}}
+            <span>
+                Ещё нету типов товаров, <a href="{{ createProductTypeLink }}"
+                >создай первый</a>!
+            </span>
+        {{/unless}}
+    </section>
+    <label for="comment-area-{{id}}">
+        Комментарий
+        <textarea id="comment-area-{{id}}" cols="30" rows="3"></textarea>
+    </label>
+</section>
