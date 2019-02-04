@@ -1,0 +1,13 @@
+.parameters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.parameter {
+    margin: 0 10px 5px 0;
+}
+
+.parameter > span {
+    margin-right: 5px;
+}
