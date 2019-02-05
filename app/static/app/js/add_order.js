@@ -1,3 +1,7 @@
+function getChildIndex(element) {
+  return Array.from(element.parentNode.children).indexOf(element);
+}
+
 function removeChooseProductTypeUI(product) {
   product.querySelector('.product__type').remove();
   product.querySelector('.product__buttons-wrapper').remove();
@@ -40,12 +44,20 @@ function removePlaceholderOptionIfExists(options) {
   if (placeholderOption) placeholderOption.remove();
 }
 
-function onParameterSelect({target : select}) {
+function updateName({product, id, value}) {
+  const nameInput = product.querySelector('.name-input');
+  const productIndex = getChildIndex(product);
+  const nameCreator = nameCreators[productIndex];
+  nameInput.value = nameCreator({id, value});
+}
+
+function onParameterSelect({target: select}) {
   const parameterName = select.getAttribute('name');
   const optionId = select.value;
   const options = Array.from(select.querySelectorAll('option'));
   const currentOption = options.find(option => option.getAttribute('value') === optionId);
-  console.log(parameterName, currentOption.innerText);
+  const product = select.parentElement.parentElement.parentElement.parentElement;
+  updateName({product, id: parameterName, value: currentOption.innerText});
   removePlaceholderOptionIfExists(options);
 }
 
@@ -63,7 +75,7 @@ async function chooseProductType() {
   productInputs.insertAdjacentHTML('beforeend', parametersHTML);
   const selectElements = Array.from(productElement.querySelectorAll('.parameters-select'));
   selectElements.forEach(select => select.addEventListener('change', onParameterSelect));
-  console.log('parameter', value);
+  updateName({product: productElement, id: 'parameter', value});
 }
 
 function getProductTemplateFactory() {
@@ -84,11 +96,13 @@ function addProduct(addProductButton, productHTML) {
   const lastProduct = productElements[productElements.length - 1];
   const newButtons = Array.from(lastProduct.querySelectorAll('.product__choose-type-button'));
   newButtons.forEach(button => button.addEventListener('click', chooseProductType));
+  nameCreators.push(window.nameCreatorFactory());
 }
 
 const getProductHTML = getProductTemplateFactory();
 const addProductButton = document.getElementById('add-product');
 
+nameCreators = [];
 addProduct(addProductButton, getProductHTML());
 
 addProductButton.addEventListener('click', () => addProduct(addProductButton, getProductHTML()));
