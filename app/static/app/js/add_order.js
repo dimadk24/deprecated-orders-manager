@@ -107,4 +107,12 @@ addProduct(addProductButton, getProductHTML());
 
 addProductButton.addEventListener('click', () => addProduct(addProductButton, getProductHTML()));
 
-
+flatpickr.localize(flatpickr.l10ns.ru);
+flatpickr('#order-datetime', {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: 'today'
+});
+flatpickr('#delivery-date', {
+  defaultDate: 'today'
+});

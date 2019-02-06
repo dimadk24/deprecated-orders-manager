@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'app/css/add_order.css' %}">
     <link rel="stylesheet" href="{% static 'app/dynamic_templates/product.css' %}">
     <link rel="stylesheet" href="{% static 'app/dynamic_templates/product__parameters.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 {% endblock %}
 
 {% block header %}
@@ -22,6 +23,18 @@
             <button id="add-product" class="button btn-add-product">+</button>
         </section>
         <aside>
+            <label for="order-datetime">
+                Дата и время заказа
+                <input type="text" id="order-datetime">
+            </label>
+            <label for="delivery-date">
+                Дата доставки
+                <input type="text" id="delivery-date">
+            </label>
+            <label for="delivery-time">
+                Время доставки
+                <input type="text" id="delivery-time">
+            </label>
             <label for="main-phone-input">
                 Телефон
                 <input id="main-phone-input">
@@ -92,6 +105,8 @@
       ];
       window.createProductTypeLink = '{% url 'admin:app_producttype_add' %}';
     </script>
+    <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
     <script src="{% static 'app/js/name_creator.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.runtime.js"
             integrity="sha256-BtsRmiQclHL1u5tbgsccCGYRl/l7cDCRfS786gntiRI="
