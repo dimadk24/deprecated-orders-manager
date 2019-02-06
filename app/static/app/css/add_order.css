@@ -19,8 +19,8 @@ main {
 }
 
 aside {
-    width: 30%;
-    min-width: 300px;
+    width: 350px;
+    max-width: 90%;
     display: flex;
     flex-direction: column;
 }
@@ -44,7 +44,7 @@ aside input[type="number"] {
     width: 90px;
 }
 
-@media (min-width: 961px) {
+@media (min-width: 1121px) {
     aside {
         position: fixed;
         top: 150px;
@@ -52,7 +52,7 @@ aside input[type="number"] {
     }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1120px) {
     main {
         flex-direction: column-reverse;
         align-items: center;
