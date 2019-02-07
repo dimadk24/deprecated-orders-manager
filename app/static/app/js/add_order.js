@@ -90,8 +90,9 @@ function getProductTemplateFactory() {
   };
 }
 
-function addProduct(addProductButton, productHTML) {
-  addProductButton.insertAdjacentHTML('beforebegin', productHTML);
+function addProduct(productHTML) {
+  const productsContainer = document.querySelector('.products');
+  productsContainer.insertAdjacentHTML('beforeend', productHTML);
   const productElements = Array.from(document.querySelectorAll('.product'));
   const lastProduct = productElements[productElements.length - 1];
   const newButtons = Array.from(lastProduct.querySelectorAll('.product__choose-type-button'));
@@ -103,9 +104,9 @@ const getProductHTML = getProductTemplateFactory();
 const addProductButton = document.getElementById('add-product');
 
 nameCreators = [];
-addProduct(addProductButton, getProductHTML());
+addProduct(getProductHTML());
 
-addProductButton.addEventListener('click', () => addProduct(addProductButton, getProductHTML()));
+addProductButton.addEventListener('click', () => addProduct(getProductHTML()));
 
 flatpickr.localize(flatpickr.l10ns.ru);
 flatpickr('#order-datetime', {
