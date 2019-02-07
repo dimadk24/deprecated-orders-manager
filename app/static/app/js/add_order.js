@@ -90,11 +90,17 @@ function getProductTemplateFactory() {
   };
 }
 
+function removeProductByCloseButton() {
+  this.parentElement.parentElement.remove();
+}
+
 function addProduct(productHTML) {
   const productsContainer = document.querySelector('.products');
   productsContainer.insertAdjacentHTML('beforeend', productHTML);
   const productElements = Array.from(document.querySelectorAll('.product'));
   const lastProduct = productElements[productElements.length - 1];
+  const removeButton = lastProduct.querySelector('.product__close');
+  removeButton.addEventListener('click', removeProductByCloseButton);
   const newButtons = Array.from(lastProduct.querySelectorAll('.product__choose-type-button'));
   newButtons.forEach(button => button.addEventListener('click', chooseProductType));
   nameCreators.push(window.nameCreatorFactory());
