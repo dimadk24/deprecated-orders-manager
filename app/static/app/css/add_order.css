@@ -25,11 +25,6 @@ main {
     width: 100%;
 }
 
-.product__close-wrapper {
-    text-align: right;
-    font-size: 2em;
-    cursor: pointer;
-}
 
 aside {
     width: 350px;

@@ -5,6 +5,15 @@
     border-radius: 10px;
 }
 
+.product__close-wrapper {
+    text-align: right;
+    font-size: 2em;
+}
+
+.product__close::before {
+    cursor: pointer;
+}
+
 .product .name-input {
     width: 350px;
     max-width: 95%;
