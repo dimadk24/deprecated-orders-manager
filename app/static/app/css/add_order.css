@@ -14,7 +14,7 @@ main {
 }
 
 .wrapper {
-    width: 100%;
+    width: 70%;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -22,7 +22,7 @@ main {
 }
 
 .products {
-    width: 70%;
+    width: 100%;
 }
 
 .product__close-wrapper {
@@ -75,19 +75,19 @@ aside input[type="number"] {
         margin-bottom: 20px;
     }
 
-    .products {
+    .wrapper {
         width: 80%;
     }
 }
 
 @media (max-width: 640px) {
-    .products {
+    .wrapper {
         width: 90%;
     }
 }
 
 @media (max-width: 480px) {
-    .products {
+    .wrapper {
         width: 95%;
     }
 }
