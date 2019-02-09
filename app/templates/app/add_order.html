@@ -4,6 +4,7 @@
 
 {% block head %}
     {% load static %}
+    <link rel="stylesheet" href="{% static 'app/fontello/css/fontello.css' %}">
     <link rel="stylesheet" href="{% static 'app/css/add_order.css' %}">
     <link rel="stylesheet" href="{% static 'app/dynamic_templates/product.css' %}">
     <link rel="stylesheet" href="{% static 'app/dynamic_templates/product__parameters.css' %}">
@@ -19,8 +20,10 @@
 
 {% block content %}
     <main>
-        <section class="products">
+        <section class="wrapper">
+            <div class="products"></div>
             <button id="add-product" class="button btn-add-product">+</button>
+            <button id="save-order" class="button btn-save-order">Сохранить заказ</button>
         </section>
         <aside>
             <label for="order-datetime">

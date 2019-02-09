@@ -13,10 +13,18 @@ main {
     display: flex;
 }
 
-.products {
+.wrapper {
     width: 70%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.products {
+    width: 100%;
+}
+
 
 aside {
     width: 350px;
@@ -62,19 +70,19 @@ aside input[type="number"] {
         margin-bottom: 20px;
     }
 
-    .products {
+    .wrapper {
         width: 80%;
     }
 }
 
 @media (max-width: 640px) {
-    .products {
+    .wrapper {
         width: 90%;
     }
 }
 
 @media (max-width: 480px) {
-    .products {
+    .wrapper {
         width: 95%;
     }
 }
@@ -118,4 +126,9 @@ aside input[type="number"] {
 .btn-add-product:active {
     background-color: darkgreen;
     color: white;
+}
+
+.btn-save-order {
+    font-size: large;
+
 }

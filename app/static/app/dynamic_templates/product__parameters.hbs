@@ -2,7 +2,12 @@
     {{#each parameters }}
         <label class="parameter" for="parameters-select-{{ id }}">
             <span>{{ name }}:</span>
-            <select name="{{ name }}" id="parameters-select-{{ id }}" class="parameters-select">
+            <select
+                    data-parameter-id="{{ id }}"
+                    name="{{ name }}"
+                    id="parameters-select-{{ id }}"
+                    class="parameters-select"
+            >
                 <option value="0">Выбрать</option>
                 {{#each options}}
                     <option value="{{ id }}">{{ name }}</option>

@@ -1,4 +1,7 @@
-<section class="product">
+<section class="product" data-product-type-chosen="false">
+    <div class="product__close-wrapper">
+        <i class="icon-close product__close"></i>
+    </div>
     <div class="product__inputs">
         <label for="name-input-{{id}}" class="name-label">
         Имя товара
@@ -6,15 +9,15 @@
     </label>
         <label for="price-input-{{id}}">
             Цена товара
-            <input type="text" id="price-input-{{id}}">
+            <input type="text" id="price-input-{{id}}" class="price-input">
         </label>
         <label for="purchase-price-input-{{id}}">
             Закупочная цена товара
-            <input type="text" id="purchase-price-input-{{id}}">
+            <input type="text" id="purchase-price-input-{{id}}" class="purchase-price-input">
         </label>
         <label for="number-input-{{id}}">
             Количество товаров
-            <input type="number" id="number-input-{{id}}">
+            <input type="number" id="number-input-{{id}}" class="number-input">
         </label>
     </div>
     <span class="product__type">Тип товара</span>
@@ -33,6 +36,6 @@
     </section>
     <label for="comment-area-{{id}}">
         Комментарий
-        <textarea id="comment-area-{{id}}" cols="30" rows="3"></textarea>
+        <textarea id="comment-area-{{id}}" cols="30" rows="3" class="comment-area"></textarea>
     </label>
 </section>
