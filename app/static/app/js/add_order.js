@@ -155,7 +155,7 @@ function validateProductSelects(product) {
   });
 }
 
-function setProductAsInvalid(element) {
+function markProductAsInvalid(element) {
   element.classList.add('product--error');
 }
 
@@ -167,13 +167,13 @@ function resetProductValidStatus(element) {
 function getProductData(element) {
   resetProductValidStatus(element);
   if (!JSON.parse(element.getAttribute('data-product-type-chosen'))) {
-    setProductAsInvalid(element);
+    markProductAsInvalid(element);
     throw new Error('Product type isn\'t chosen');
   }
   try {
     validateProductSelects(element);
   } catch (e) {
-    setProductAsInvalid(element);
+    markProductAsInvalid(element);
     throw new Error('select is not chosen');
   }
   const name = element.querySelector('.name-input').value;
