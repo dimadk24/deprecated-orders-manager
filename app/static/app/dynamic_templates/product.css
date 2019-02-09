@@ -5,6 +5,10 @@
     border-radius: 10px;
 }
 
+.product--error {
+    border: 2px solid red;
+}
+
 .product__close-wrapper {
     text-align: right;
     font-size: 2em;

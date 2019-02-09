@@ -70,12 +70,14 @@ async function chooseProductType() {
   const loaderHtml = getLoaderHtml(productElement, productInputs);
   productInputs.insertAdjacentHTML('afterend', loaderHtml);
   const parameters = await getParameters(productTypeId);
+  console.log(parameters);
   removeLoader(productElement);
   const parametersHTML = createParametersHTML(parameters);
   productInputs.insertAdjacentHTML('beforeend', parametersHTML);
   const selectElements = Array.from(productElement.querySelectorAll('.parameters-select'));
   selectElements.forEach(select => select.addEventListener('change', onParameterSelect));
   updateName({product: productElement, id: 'parameter', value});
+  productElement.setAttribute('data-product-type-chosen', 'true');
 }
 
 function getProductTemplateFactory() {
@@ -106,6 +108,101 @@ function addProduct(productHTML) {
   nameCreators.push(window.nameCreatorFactory());
 }
 
+function getFlatpickrTimestamp(element) {
+  const picker = element._flatpickr;
+  return picker.selectedDates[0].getTime();
+}
+
+function getElementValue(elementId) {
+  const element = document.getElementById(elementId);
+  return element.value;
+}
+
+function getAsideInputs() {
+  const aside = document.querySelector('aside');
+  const orderDatetime = getFlatpickrTimestamp(aside.querySelector('#order-datetime'));
+  const deliveryDate = getFlatpickrTimestamp(aside.querySelector('#delivery-date'));
+  const inputIds = [
+    'delivery-time',
+    'main-phone-input',
+    'add-phone-input',
+    'index-input',
+    'area-input',
+    'city-input',
+    'street-type-select',
+    'street-input',
+    'house-input',
+    'building-input',
+    'flat-input',
+    'floor-input',
+    'entrance-input'
+  ];
+  const simpleInputValues = inputIds.reduce((accumulator, inputId) => ({
+    ...accumulator,
+    [inputId]: getElementValue(inputId)
+  }), {});
+  return {
+    ...simpleInputValues,
+    'order-datetime': orderDatetime,
+    'delivery-date': deliveryDate
+  };
+}
+
+function validateProductSelects(product) {
+  const selects = Array.from(product.getElementsByTagName('select'));
+  selects.forEach(select => {
+    if (select.value === '0') throw new Error('select is not chosen');
+  });
+}
+
+function setProductAsInvalid(element) {
+  element.classList.add('product--error');
+}
+
+function resetProductValidStatus(element) {
+  if (element.classList.contains('product--error'))
+    element.classList.remove('product--error');
+}
+
+function getProductData(element) {
+  resetProductValidStatus(element);
+  if (!JSON.parse(element.getAttribute('data-product-type-chosen'))) {
+    setProductAsInvalid(element);
+    throw new Error('Product type isn\'t chosen');
+  }
+  try {
+    validateProductSelects(element);
+  } catch (e) {
+    setProductAsInvalid(element);
+    throw new Error('select is not chosen');
+  }
+  const name = element.querySelector('.name-input').value;
+  const price = element.querySelector('.price-input').value;
+  const purchasePrice = element.querySelector('.purchase-price-input').value;
+  const number = element.querySelector('.number-input').value;
+  const comment = element.querySelector('.comment-area').value;
+  const selects = Array.from(element.querySelectorAll('.parameters-select'));
+  const selectsInputs = selects.reduce((accumulator, select) => ({
+    ...accumulator,
+    [select.getAttribute('data-parameter-id')]: select.value
+  }), {});
+  return {
+    name, price, purchasePrice, number, comment, selectsInputs
+  };
+}
+
+function getProductsData() {
+  const products = Array.from(document.querySelectorAll('.product'));
+  return products.map(getProductData);
+}
+
+function saveOrder() {
+  const orderId = getElementValue('order-id');
+  const asideData = getAsideInputs();
+  const productsData = getProductsData();
+  console.log(orderId, asideData, productsData);
+}
+
 const getProductHTML = getProductTemplateFactory();
 const addProductButton = document.getElementById('add-product');
 
@@ -123,3 +220,6 @@ flatpickr('#order-datetime', {
 flatpickr('#delivery-date', {
   defaultDate: 'today'
 });
+
+const saveOrderButton = document.querySelector('#save-order');
+saveOrderButton.addEventListener('click', saveOrder);
