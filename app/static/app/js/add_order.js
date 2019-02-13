@@ -134,7 +134,8 @@ function getAsideInputs() {
     'building-input',
     'flat-input',
     'floor-input',
-    'entrance-input'
+    'entrance-input',
+    'order-comment-area'
   ];
   const simpleInputValues = inputIds.reduce((accumulator, inputId) => ({
     ...accumulator,
