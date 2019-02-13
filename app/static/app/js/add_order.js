@@ -70,7 +70,6 @@ async function chooseProductType() {
   const loaderHtml = getLoaderHtml(productElement, productInputs);
   productInputs.insertAdjacentHTML('afterend', loaderHtml);
   const parameters = await getParameters(productTypeId);
-  console.log(parameters);
   removeLoader(productElement);
   const parametersHTML = createParametersHTML(parameters);
   productInputs.insertAdjacentHTML('beforeend', parametersHTML);
