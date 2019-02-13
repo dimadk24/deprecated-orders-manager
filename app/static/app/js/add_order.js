@@ -182,10 +182,7 @@ function getProductData(element) {
   const number = element.querySelector('.number-input').value;
   const comment = element.querySelector('.comment-area').value;
   const selects = Array.from(element.querySelectorAll('.parameters-select'));
-  const selectsInputs = selects.reduce((accumulator, select) => ({
-    ...accumulator,
-    [select.getAttribute('data-parameter-id')]: select.value
-  }), {});
+  const selectsInputs = selects.map(select => select.value);
   return {
     name, price, purchasePrice, number, comment, selectsInputs
   };
