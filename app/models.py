@@ -51,7 +51,7 @@ class Address(models.Model):
         ('тр', 'тракт'),
         ('шс', 'шоссе'),
     )
-    customer = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Клиент')
+    customer = models.OneToOneField('Customer', on_delete=models.CASCADE, verbose_name='Клиент')
     index = models.PositiveIntegerField(verbose_name='Индекс', blank=True)
     area = models.CharField(max_length=50, verbose_name='Область', blank=True)
     city = models.CharField(max_length=50, verbose_name='Город')
