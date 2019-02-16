@@ -128,9 +128,13 @@ def create_order(request):
     delivery_date_timestamp_in_seconds = json_input['delivery_date'] / 1000
     order_datetime = get_datetime_from_timestamp(order_datetime_timestamp)
     delivery_date = date.fromtimestamp(delivery_date_timestamp_in_seconds)
+    additional_phone = json_input['additional_phone']
     customer = Customer.objects.get_or_create(main_phone=json_input['main_phone'], defaults={
-        'additional_phone': json_input['additional_phone']
+        'additional_phone': additional_phone
     })[0]
+    if additional_phone and customer.additional_phone != additional_phone:
+        customer.additional_phone = additional_phone
+        customer.save()
     order = Order(pk=json_input['order_id'], comment=json_input['comment'],
                   order_datetime=order_datetime, delivery_date=delivery_date,
                   delivery_time=json_input['delivery_time'],
