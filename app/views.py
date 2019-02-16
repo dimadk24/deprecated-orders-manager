@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from app.helpers import get_datetime_from_timestamp
+from app.helpers import get_datetime_from_timestamp, update_if_truthy
 from app.models import ProductType, Order, Address, Product, Option, Customer
 from app.responses import russian_json_response
 
@@ -129,12 +129,12 @@ def create_order(request):
     order_datetime = get_datetime_from_timestamp(order_datetime_timestamp)
     delivery_date = date.fromtimestamp(delivery_date_timestamp_in_seconds)
     additional_phone = json_input['additional_phone']
-    customer = Customer.objects.get_or_create(main_phone=json_input['main_phone'], defaults={
+    optional_customer_data = {
         'additional_phone': additional_phone
-    })[0]
-    if additional_phone and customer.additional_phone != additional_phone:
-        customer.additional_phone = additional_phone
-        customer.save()
+    }
+    customer = Customer.objects.get_or_create(main_phone=json_input['main_phone'],
+                                              defaults=optional_customer_data)[0]
+    update_if_truthy(customer, optional_customer_data)
     order = Order(pk=json_input['order_id'], comment=json_input['comment'],
                   order_datetime=order_datetime, delivery_date=delivery_date,
                   delivery_time=json_input['delivery_time'],
@@ -152,17 +152,19 @@ def create_order(request):
         for option_id in json_product['option_ids']:
             product.options.add(Option.objects.get(pk=option_id))
         order.product_set.add(product)
-    address = Address.objects.get_or_create(customer=customer, defaults={
-        'index': json_input['index'],
+    optional_address_data = {
+        'index': int(json_input['index']),
         'area': json_input['area'],
         'city': json_input['city'],
         'street_type': json_input['street_type'],
         'street_name': json_input['street_name'],
         'house': json_input['house'],
         'building': json_input['building'],
-        'flat': json_input['flat'],
-        'floor': json_input['floor'],
-        'entrance': json_input['entrance']
-    })[0]
+        'flat': int(json_input['flat']),
+        'floor': int(json_input['floor']),
+        'entrance': int(json_input['entrance'])
+    }
+    address = Address.objects.get_or_create(customer=customer, defaults=optional_address_data)[0]
+    update_if_truthy(address, optional_address_data)
     address.save()
     return russian_json_response({"ok": "ok"})
