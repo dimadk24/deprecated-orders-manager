@@ -48,6 +48,10 @@ aside input {
     border: 1px solid black;
 }
 
+.input--error {
+    border: 2px solid red !important;
+}
+
 aside input[type="number"] {
     width: 90px;
 }

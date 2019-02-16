@@ -236,11 +236,24 @@ function sendOrder({orderId, asideData, productsData: products}) {
     .then(response => console.log(response));
 }
 
+function resetRequiredFieldsStatus() {
+  const errorFields = Array.from(document.querySelectorAll('.input--error'));
+  errorFields.forEach(field => {
+    if (field.classList.contains('input--error')) field.classList.remove('input--error');
+  });
+}
+
 function checkRequiredFields() {
+  resetRequiredFieldsStatus();
   const requiredFields = Array.from(document.querySelectorAll('[required]'));
+  let invalid = false;
   requiredFields.forEach(field => {
-    if (!field.value) throw new Error(`${field.getAttribute('id')} is not set`)
-  })
+    if (!field.value) {
+      field.classList.add('input--error');
+      invalid = true;
+    }
+  });
+  if (invalid) throw new Error(`some required fields aren't set`);
 }
 
 function saveOrder() {
