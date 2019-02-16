@@ -228,12 +228,14 @@ function convertProductsDataToApiFormat(products) {
     }));
 }
 
-function sendOrder({orderId, asideData, productsData: products}) {
-  fetch('/api/createOrder', {
+async function sendOrder({orderId, asideData, productsData: products}) {
+  const response = await fetch('/api/createOrder', {
     method: 'POST',
     body: JSON.stringify({order_id: orderId, ...asideData, products})
-  })
-    .then(response => console.log(response));
+  });
+  if (!response.ok) throw new Error('server error');
+  const jsonResponse = await response.json();
+  if (jsonResponse.ok !== 'ok') throw new Error('server error');
 }
 
 function resetRequiredFieldsStatus() {
@@ -256,14 +258,58 @@ function checkRequiredFields() {
   if (invalid) throw new Error(`some required fields aren't set`);
 }
 
-function saveOrder() {
-  checkRequiredFields();
-  const orderId = getElementValue('order-id');
-  const asideData = getAsideInputs();
-  const productsData = getProductsData();
+function showSaveOrderLoader() {
+  const saveOrderButton = document.getElementById('save-order');
+  saveOrderButton.insertAdjacentHTML('beforebegin', getLoaderHtml());
+}
+
+function removeSaveOrderLoader() {
+  const loader = document.querySelector('.loader');
+  loader.remove();
+}
+
+function showSaveOrderFailedModal(text) {
+  swal({
+    title: 'Ошибка',
+    text,
+    icon: 'error'
+  });
+}
+
+function showSaveOrderSucceedModal() {
+  swal({
+    text: 'Успешно сохранено',
+    icon: 'success'
+  });
+}
+
+async function saveOrder() {
+  let orderId, asideData, productsData;
+  try {
+    checkRequiredFields();
+    orderId = getElementValue('order-id');
+    asideData = getAsideInputs();
+    productsData = getProductsData();
+  } catch (e) {
+    showSaveOrderFailedModal('Неверно заполены некоторые поля. Они отмечены красным');
+    throw new Error("fields aren't  valid")
+  }
+  showSaveOrderLoader();
   const asideDataInApiFormat = convertAsideDataToApiFormat(asideData);
   const productsDataInApiFormat = convertProductsDataToApiFormat(productsData);
-  sendOrder({orderId, asideData: asideDataInApiFormat, productsData: productsDataInApiFormat});
+  try {
+    await sendOrder({
+      orderId,
+      asideData: asideDataInApiFormat,
+      productsData: productsDataInApiFormat
+    });
+    showSaveOrderSucceedModal();
+  } catch (e) {
+    showSaveOrderFailedModal('Возникла ошибка при сохранении');
+    throw new Error('saving failed');
+  } finally {
+    removeSaveOrderLoader();
+  }
 }
 
 const getProductHTML = getProductTemplateFactory();
