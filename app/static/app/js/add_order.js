@@ -76,7 +76,7 @@ async function chooseProductType() {
   const selectElements = Array.from(productElement.querySelectorAll('.parameters-select'));
   selectElements.forEach(select => select.addEventListener('change', onParameterSelect));
   updateName({product: productElement, id: 'parameter', value});
-  productElement.setAttribute('data-product-type-chosen', 'true');
+  productElement.setAttribute('data-product-type-id', productTypeId);
 }
 
 function getProductTemplateFactory() {
@@ -166,7 +166,8 @@ function resetProductValidStatus(element) {
 
 function getProductData(element) {
   resetProductValidStatus(element);
-  if (!JSON.parse(element.getAttribute('data-product-type-chosen'))) {
+  const productTypeId = parseInt(element.getAttribute('data-product-type-id'), 10);
+  if (productTypeId === 0) {
     markProductAsInvalid(element);
     throw new Error('Product type isn\'t chosen');
   }
@@ -184,7 +185,7 @@ function getProductData(element) {
   const selects = Array.from(element.querySelectorAll('.parameters-select'));
   const selectsInputs = selects.map(select => select.value);
   return {
-    name, price, purchasePrice, number, comment, selectsInputs
+    name, price, purchasePrice, number, comment, selectsInputs, productTypeId
   };
 }
 
