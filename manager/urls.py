@@ -23,5 +23,6 @@ urlpatterns = [
     path('add_order', views.add_order_view, name='add_order'),
     path('api/getProductTypeParameters', views.get_product_type_parameters,
          name='get_product_type_parameters'),
+    path('api/createOrder', views.create_order, name='create_order'),
     path('admin/', admin_site.urls),
 ]

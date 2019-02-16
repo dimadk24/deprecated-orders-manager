@@ -70,14 +70,13 @@ async function chooseProductType() {
   const loaderHtml = getLoaderHtml(productElement, productInputs);
   productInputs.insertAdjacentHTML('afterend', loaderHtml);
   const parameters = await getParameters(productTypeId);
-  console.log(parameters);
   removeLoader(productElement);
   const parametersHTML = createParametersHTML(parameters);
   productInputs.insertAdjacentHTML('beforeend', parametersHTML);
   const selectElements = Array.from(productElement.querySelectorAll('.parameters-select'));
   selectElements.forEach(select => select.addEventListener('change', onParameterSelect));
   updateName({product: productElement, id: 'parameter', value});
-  productElement.setAttribute('data-product-type-chosen', 'true');
+  productElement.setAttribute('data-product-type-id', productTypeId);
 }
 
 function getProductTemplateFactory() {
@@ -135,7 +134,8 @@ function getAsideInputs() {
     'building-input',
     'flat-input',
     'floor-input',
-    'entrance-input'
+    'entrance-input',
+    'order-comment-area'
   ];
   const simpleInputValues = inputIds.reduce((accumulator, inputId) => ({
     ...accumulator,
@@ -166,7 +166,8 @@ function resetProductValidStatus(element) {
 
 function getProductData(element) {
   resetProductValidStatus(element);
-  if (!JSON.parse(element.getAttribute('data-product-type-chosen'))) {
+  const productTypeId = parseInt(element.getAttribute('data-product-type-id'), 10);
+  if (productTypeId === 0) {
     markProductAsInvalid(element);
     throw new Error('Product type isn\'t chosen');
   }
@@ -182,12 +183,9 @@ function getProductData(element) {
   const number = element.querySelector('.number-input').value;
   const comment = element.querySelector('.comment-area').value;
   const selects = Array.from(element.querySelectorAll('.parameters-select'));
-  const selectsInputs = selects.reduce((accumulator, select) => ({
-    ...accumulator,
-    [select.getAttribute('data-parameter-id')]: select.value
-  }), {});
+  const selectsInputs = selects.map(select => select.value);
   return {
-    name, price, purchasePrice, number, comment, selectsInputs
+    name, price, purchasePrice, number, comment, selectsInputs, productTypeId
   };
 }
 
@@ -196,11 +194,122 @@ function getProductsData() {
   return products.map(getProductData);
 }
 
-function saveOrder() {
-  const orderId = getElementValue('order-id');
-  const asideData = getAsideInputs();
-  const productsData = getProductsData();
-  console.log(orderId, asideData, productsData);
+function convertAsideDataToApiFormat(data) {
+  return {
+    additional_phone: data['add-phone-input'],
+    area: data['area-input'],
+    building: data['building-input'],
+    city: data['city-input'],
+    delivery_date: data['delivery-date'],
+    delivery_time: data['delivery-time'],
+    entrance: data['entrance-input'],
+    flat: data['flat-input'],
+    floor: data['floor-input'],
+    house: data['house-input'],
+    index: data['index-input'],
+    main_phone: data['main-phone-input'],
+    comment: data['order-comment-area'],
+    order_datetime: data['order-datetime'],
+    street_name: data['street-input'],
+    street_type: data['street-type-select']
+  };
+}
+
+function convertProductsDataToApiFormat(products) {
+  return products.map(
+    ({comment, name, number, price, purchasePrice, selectsInputs, productTypeId}) => ({
+      comment,
+      name,
+      price,
+      number,
+      purchase_price: purchasePrice,
+      option_ids: selectsInputs,
+      type_id: productTypeId
+    }));
+}
+
+async function sendOrder({orderId, asideData, productsData: products}) {
+  const response = await fetch('/api/createOrder', {
+    method: 'POST',
+    body: JSON.stringify({order_id: orderId, ...asideData, products})
+  });
+  if (!response.ok) throw new Error('server error');
+  const jsonResponse = await response.json();
+  if (jsonResponse.ok !== 'ok') throw new Error('server error');
+}
+
+function resetRequiredFieldsStatus() {
+  const errorFields = Array.from(document.querySelectorAll('.input--error'));
+  errorFields.forEach(field => {
+    if (field.classList.contains('input--error')) field.classList.remove('input--error');
+  });
+}
+
+function checkRequiredFields() {
+  resetRequiredFieldsStatus();
+  const requiredFields = Array.from(document.querySelectorAll('[required]'));
+  let invalid = false;
+  requiredFields.forEach(field => {
+    if (!field.value) {
+      field.classList.add('input--error');
+      invalid = true;
+    }
+  });
+  if (invalid) throw new Error(`some required fields aren't set`);
+}
+
+function showSaveOrderLoader() {
+  const saveOrderButton = document.getElementById('save-order');
+  saveOrderButton.insertAdjacentHTML('beforebegin', getLoaderHtml());
+}
+
+function removeSaveOrderLoader() {
+  const loader = document.querySelector('.loader');
+  loader.remove();
+}
+
+function showSaveOrderFailedModal(text) {
+  swal({
+    title: 'Ошибка',
+    text,
+    icon: 'error'
+  });
+}
+
+function showSaveOrderSucceedModal() {
+  swal({
+    text: 'Успешно сохранено',
+    icon: 'success'
+  });
+}
+
+async function saveOrder() {
+  let orderId, asideData, productsData;
+  try {
+    checkRequiredFields();
+    orderId = getElementValue('order-id');
+    asideData = getAsideInputs();
+    productsData = getProductsData();
+  } catch (e) {
+    showSaveOrderFailedModal('Неверно заполены некоторые поля. Они отмечены красным');
+    throw new Error("fields aren't  valid")
+  }
+  showSaveOrderLoader();
+  const asideDataInApiFormat = convertAsideDataToApiFormat(asideData);
+  const productsDataInApiFormat = convertProductsDataToApiFormat(productsData);
+  try {
+    await sendOrder({
+      orderId,
+      asideData: asideDataInApiFormat,
+      productsData: productsDataInApiFormat
+    });
+    showSaveOrderSucceedModal();
+  } catch (e) {
+    showSaveOrderFailedModal('Возникла ошибка при сохранении');
+    throw new Error('saving failed');
+  } finally {
+    removeSaveOrderLoader();
+  }
 }
 
 const getProductHTML = getProductTemplateFactory();

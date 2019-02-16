@@ -40,7 +40,7 @@
             </label>
             <label for="main-phone-input">
                 Телефон
-                <input id="main-phone-input">
+                <input id="main-phone-input" required>
             </label>
             <label for="add-phone-input">
                 Доп. телефон
@@ -91,6 +91,10 @@
                     Подъезд
                     <input type="number" id="entrance-input">
                 </label>
+                <label for="order-comment-area">
+                    Комментарий
+                    <textarea id="order-comment-area" cols="30" rows="3" class="comment-area"></textarea>
+                </label>
             </div>
         </aside>
     </main>
@@ -117,4 +121,5 @@
     <script src="{% static 'app/dynamic_compiled_templates/product.js' %}"></script>
     <script src="{% static 'app/dynamic_compiled_templates/product__parameters.js' %}"></script>
     <script src="{% static 'app/js/add_order.js' %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {% endblock %}

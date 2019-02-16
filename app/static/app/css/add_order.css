@@ -48,14 +48,26 @@ aside input {
     border: 1px solid black;
 }
 
+.input--error {
+    border: 2px solid red !important;
+}
+
 aside input[type="number"] {
     width: 90px;
+}
+
+aside .comment-area {
+    width: 150px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid black;
+    vertical-align: top;
 }
 
 @media (min-width: 1121px) {
     aside {
         position: fixed;
-        top: 150px;
+        top: 50px;
         right: 0;
     }
 }
