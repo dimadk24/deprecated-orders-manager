@@ -236,7 +236,15 @@ function sendOrder({orderId, asideData, productsData: products}) {
     .then(response => console.log(response));
 }
 
+function checkRequiredFields() {
+  const requiredFields = Array.from(document.querySelectorAll('[required]'));
+  requiredFields.forEach(field => {
+    if (!field.value) throw new Error(`${field.getAttribute('id')} is not set`)
+  })
+}
+
 function saveOrder() {
+  checkRequiredFields();
   const orderId = getElementValue('order-id');
   const asideData = getAsideInputs();
   const productsData = getProductsData();
