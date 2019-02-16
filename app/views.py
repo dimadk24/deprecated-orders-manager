@@ -1,9 +1,14 @@
+import json
+from datetime import date
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
-from app.models import ProductType, Order, Address
+from app.helpers import get_datetime_from_timestamp
+from app.models import ProductType, Order, Address, Product, Option, Customer
 from app.responses import russian_json_response
 
 
@@ -66,3 +71,94 @@ def get_product_type_parameters(request):
             })
         response.append(response_parameter)
     return russian_json_response(response, safe=False)
+
+
+@csrf_exempt
+@login_required
+def create_order(request):
+    """
+    input
+    {
+        "order_id": "1",
+        "main_phone": "+375445814266",
+        "additional_phone": "+375298757099",
+        "index": 220096,
+        "area": "Минская",
+        "city": "Minsk",
+        "street_type": "ул",
+        "street_name": "Голодеда",
+        "house": 2,
+        "building": "a",
+        "flat": 12,
+        "floor": 3,
+        "entrance": 5,
+        "order_datetime": 1549832400000,
+        "delivery_date": 1549832400000,
+        "delivery_time": "today, at night",
+        "products": [
+            {
+                "name": "Комплект постельного белья 2,0 бязь",
+                "type_id": 1,
+                "number": 2,
+                "price": 44.5,
+                "purchase_price": 20.1,
+                "option_ids": [
+                    2,6
+                ],
+                "comment": "супер товар"
+            }
+        ],
+        "comment": "super cool order"
+    }
+
+    returns
+    {
+        "ok":"ok"
+    }
+    or
+    {
+        "error": {
+            "code": "error id",
+            "text": "error string"
+        }
+    }
+    """
+    json_input = json.loads(request.body)
+    order_datetime_timestamp = json_input['order_datetime']
+    delivery_date_timestamp_in_seconds = json_input['delivery_date'] / 1000
+    order_datetime = get_datetime_from_timestamp(order_datetime_timestamp)
+    delivery_date = date.fromtimestamp(delivery_date_timestamp_in_seconds)
+    customer = Customer.objects.get_or_create(main_phone=json_input['main_phone'], defaults={
+        'additional_phone': json_input['additional_phone']
+    })[0]
+    order = Order(pk=json_input['order_id'], comment=json_input['comment'],
+                  order_datetime=order_datetime, delivery_date=delivery_date,
+                  delivery_time=json_input['delivery_time'],
+                  customer=customer)
+    order.save()
+    for json_product in json_input['products']:
+        product = Product(name=json_product['name'],
+                          type_id=json_product['type_id'],
+                          number=int(json_product['number']),
+                          price=float(json_product['price']),
+                          purchase_price=float(json_product['purchase_price']),
+                          order=order,
+                          comment=json_product['comment'])
+        product.save()
+        for option_id in json_product['option_ids']:
+            product.options.add(Option.objects.get(pk=option_id))
+        order.product_set.add(product)
+    address = Address.objects.get_or_create(customer=customer, defaults={
+        'index': json_input['index'],
+        'area': json_input['area'],
+        'city': json_input['city'],
+        'street_type': json_input['street_type'],
+        'street_name': json_input['street_name'],
+        'house': json_input['house'],
+        'building': json_input['building'],
+        'flat': json_input['flat'],
+        'floor': json_input['floor'],
+        'entrance': json_input['entrance']
+    })[0]
+    address.save()
+    return russian_json_response({"ok": "ok"})
