@@ -194,11 +194,55 @@ function getProductsData() {
   return products.map(getProductData);
 }
 
+function convertAsideDataToApiFormat(data) {
+  return {
+    additional_phone: data['add-phone-input'],
+    area: data['area-input'],
+    building: data['building-input'],
+    city: data['city-input'],
+    delivery_date: data['delivery-date'],
+    delivery_time: data['delivery-time'],
+    entrance: data['entrance-input'],
+    flat: data['flat-input'],
+    floor: data['floor-input'],
+    house: data['house-input'],
+    index: data['index-input'],
+    main_phone: data['main-phone-input'],
+    comment: data['order-comment-area'],
+    order_datetime: data['order-datetime'],
+    street_name: data['street-input'],
+    street_type: data['street-type-select']
+  };
+}
+
+function convertProductsDataToApiFormat(products) {
+  return products.map(
+    ({comment, name, number, price, purchasePrice, selectsInputs, productTypeId}) => ({
+      comment,
+      name,
+      price,
+      number,
+      purchase_price: purchasePrice,
+      option_ids: selectsInputs,
+      type_id: productTypeId
+    }));
+}
+
+function sendOrder({orderId, asideData, productsData: products}) {
+  fetch('/api/createOrder', {
+    method: 'POST',
+    body: JSON.stringify({order_id: orderId, ...asideData, products})
+  })
+    .then(response => console.log(response));
+}
+
 function saveOrder() {
   const orderId = getElementValue('order-id');
   const asideData = getAsideInputs();
   const productsData = getProductsData();
-  console.log(orderId, asideData, productsData);
+  const asideDataInApiFormat = convertAsideDataToApiFormat(asideData);
+  const productsDataInApiFormat = convertProductsDataToApiFormat(productsData);
+  sendOrder({orderId, asideData: asideDataInApiFormat, productsData: productsDataInApiFormat});
 }
 
 const getProductHTML = getProductTemplateFactory();
