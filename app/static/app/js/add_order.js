@@ -68,11 +68,11 @@ async function chooseProductType() {
   removeChooseProductTypeUI(productElement);
   const productInputs = productElement.querySelector('.product__inputs');
   const loaderHtml = getLoaderHtml(productElement, productInputs);
-  productInputs.insertAdjacentHTML('afterend', loaderHtml);
+  productInputs.insertAdjacentHTML('beforebegin', loaderHtml);
   const parameters = await getParameters(productTypeId);
   removeLoader(productElement);
   const parametersHTML = createParametersHTML(parameters);
-  productInputs.insertAdjacentHTML('beforeend', parametersHTML);
+  productInputs.insertAdjacentHTML('beforebegin', parametersHTML);
   const selectElements = Array.from(productElement.querySelectorAll('.parameters-select'));
   selectElements.forEach(select => select.addEventListener('change', onParameterSelect));
   updateName({product: productElement, id: 'parameter', value});

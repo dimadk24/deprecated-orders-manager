@@ -2,24 +2,10 @@
     <div class="product__close-wrapper">
         <i class="icon-close product__close"></i>
     </div>
-    <div class="product__inputs">
-        <label for="name-input-{{id}}" class="name-label">
+    <label for="name-input-{{id}}" class="name-label">
         Имя товара
         <input type="text" id="name-input-{{id}}" class="name-input" disabled>
     </label>
-        <label for="price-input-{{id}}">
-            Цена товара
-            <input type="text" id="price-input-{{id}}" class="price-input" required>
-        </label>
-        <label for="purchase-price-input-{{id}}">
-            Закупочная цена товара
-            <input type="text" id="purchase-price-input-{{id}}" class="purchase-price-input" required>
-        </label>
-        <label for="number-input-{{id}}">
-            Количество товаров
-            <input type="number" id="number-input-{{id}}" class="number-input" value="1">
-        </label>
-    </div>
     <span class="product__type">Тип товара</span>
     <section class="product__buttons-wrapper">
         {{#each types}}
@@ -30,10 +16,29 @@
         {{#unless types.length}}
             <span>
                 Ещё нету типов товаров, <a href="{{ createProductTypeLink }}"
-                >создай первый</a>!
+            >создай первый</a>!
             </span>
         {{/unless}}
     </section>
+    <div class="product__inputs">
+        <label for="purchase-price-input-{{id}}">
+            Закупочная цена товара
+            <input
+                    type="text"
+                    id="purchase-price-input-{{id}}"
+                    class="purchase-price-input"
+                    required
+            >
+        </label>
+        <label for="price-input-{{id}}">
+            Цена товара
+            <input type="text" id="price-input-{{id}}" class="price-input" required>
+        </label>
+        <label for="number-input-{{id}}">
+            Количество товаров
+            <input type="number" id="number-input-{{id}}" class="number-input" value="1">
+        </label>
+    </div>
     <label for="comment-area-{{id}}">
         Комментарий
         <textarea id="comment-area-{{id}}" cols="30" rows="3" class="comment-area"></textarea>
