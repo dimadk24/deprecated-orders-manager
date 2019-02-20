@@ -143,7 +143,7 @@ def create_order(request):
     for json_product in json_input['products']:
         product = Product(name=json_product['name'],
                           type_id=json_product['type_id'],
-                          number=int(json_product['number']),
+                          number=int(json_product['number'] or 1),
                           price=float(json_product['price']),
                           purchase_price=float(json_product['purchase_price']),
                           order=order,
@@ -153,16 +153,16 @@ def create_order(request):
             product.options.add(Option.objects.get(pk=option_id))
         order.product_set.add(product)
     optional_address_data = {
-        'index': int(json_input['index']),
+        'index': int(json_input['index'] or 0),
         'area': json_input['area'],
         'city': json_input['city'],
         'street_type': json_input['street_type'],
         'street_name': json_input['street_name'],
         'house': json_input['house'],
         'building': json_input['building'],
-        'flat': int(json_input['flat']),
-        'floor': int(json_input['floor']),
-        'entrance': int(json_input['entrance'])
+        'flat': int(json_input['flat'] or 0),
+        'floor': int(json_input['floor'] or 0),
+        'entrance': int(json_input['entrance'] or 0)
     }
     address = Address.objects.get_or_create(customer=customer, defaults=optional_address_data)[0]
     update_if_truthy(address, optional_address_data)

@@ -178,8 +178,8 @@ function getProductData(element) {
     throw new Error('select is not chosen');
   }
   const name = element.querySelector('.name-input').value;
-  const price = element.querySelector('.price-input').value;
-  const purchasePrice = element.querySelector('.purchase-price-input').value;
+  const price = element.querySelector('.price-input').value.replace(',', '.');
+  const purchasePrice = element.querySelector('.purchase-price-input').value.replace(',', '.');
   const number = element.querySelector('.number-input').value;
   const comment = element.querySelector('.comment-area').value;
   const selects = Array.from(element.querySelectorAll('.parameters-select'));
@@ -324,10 +324,12 @@ flatpickr.localize(flatpickr.l10ns.ru);
 flatpickr('#order-datetime', {
   enableTime: true,
   time_24hr: true,
-  defaultDate: 'today'
+  defaultDate: 'today',
+  dateFormat: 'j.m.Y H:i'
 });
 flatpickr('#delivery-date', {
-  defaultDate: 'today'
+  defaultDate: 'today',
+  dateFormat: 'j.m.Y H:i'
 });
 
 const saveOrderButton = document.querySelector('#save-order');
