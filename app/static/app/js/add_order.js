@@ -324,10 +324,12 @@ flatpickr.localize(flatpickr.l10ns.ru);
 flatpickr('#order-datetime', {
   enableTime: true,
   time_24hr: true,
-  defaultDate: 'today'
+  defaultDate: 'today',
+  dateFormat: 'j.m.Y H:i'
 });
 flatpickr('#delivery-date', {
-  defaultDate: 'today'
+  defaultDate: 'today',
+  dateFormat: 'j.m.Y H:i'
 });
 
 const saveOrderButton = document.querySelector('#save-order');
