@@ -56,7 +56,7 @@ function onParameterSelect({target: select}) {
   const optionId = select.value;
   const options = Array.from(select.querySelectorAll('option'));
   const currentOption = options.find(option => option.getAttribute('value') === optionId);
-  const product = select.parentElement.parentElement.parentElement.parentElement;
+  const product = select.parentElement.parentElement.parentElement;
   updateName({product, id: parameterName, value: currentOption.innerText});
   removePlaceholderOptionIfExists(options);
 }
