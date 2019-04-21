@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,css}\"",
+    "lint": "npm run lint:es && npm run lint:style",
+    "lint:es": "eslint \"**/*.{js,jsx}\"",
+    "lint:style": "stylelint \"src/**/*.css\""
+  },
+  "dependencies": {
+    "gatsby": "^2.3.25",
+    "gatsby-plugin-react-helmet": "^3.0.12",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "prettier": "^1.17.0",
+    "stylelint": "^9.10.1",
+    "stylelint-config-prettier": "^4.0.0",
+    "stylelint-config-recommended": "^2.2.0"
+  }
+}
